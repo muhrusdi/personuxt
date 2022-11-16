@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import overview from "./templates/overview/index.vue"
+  import overview from "../templates/overview/index.vue"
   export default {
     components: {
       overview
