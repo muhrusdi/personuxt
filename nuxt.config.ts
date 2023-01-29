@@ -21,6 +21,9 @@ export default defineNuxtConfig({
       ]
     }
   },
+  experimental: {
+    componentIslands: true
+  },
   postcss: {
     plugins: {
       tailwindcss: {},
