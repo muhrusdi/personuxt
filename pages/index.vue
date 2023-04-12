@@ -1,14 +1,9 @@
+  <script setup lang="ts">
+    import overview from "../templates/overview/index.vue"
+  </script>
+
 <template>
   <div>
     <overview/>
   </div>
 </template>
-
-<script>
-  import overview from "../templates/overview/index.vue"
-  export default {
-    components: {
-      overview
-    }
-  }
-</script>
