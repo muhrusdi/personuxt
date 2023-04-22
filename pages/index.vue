@@ -1,6 +1,6 @@
-  <script setup lang="ts">
-    import overview from "../templates/overview/index.vue"
-  </script>
+<script setup lang="ts">
+  import overview from "../templates/overview/index.vue"
+</script>
 
 <template>
   <div>
