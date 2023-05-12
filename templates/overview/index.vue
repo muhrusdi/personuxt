@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { Form, Field } from "vee-validate"
-import Input from '../../components/forms/input/input.vue';
-import { useCounterStore } from "../../stores/counter";
+import Input from '~/components/forms/input/input.vue';
+import { useCounterStore } from "~/stores/counter";
 
   const counter = useCounterStore();
 
