@@ -43,5 +43,10 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
+    '@nuxt/devtools'
   ],
+  devtools: {
+    enabled: true,
+    vscode: {},
+  }
 })
