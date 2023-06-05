@@ -4,9 +4,10 @@ type Params<TOptions> = {
   options?: UseFetchOptions<TOptions>
 }
 
-enum Paths {
-  login = "/login"
-}
+type Paths = 
+  | "/login"
+  | "/register"
+
 
 export const useAsync = <TData>(path: Paths, params?: Params<TData>) => {
   return useFetch(path as string, {
