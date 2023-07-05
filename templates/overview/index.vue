@@ -1,27 +1,23 @@
 <script setup lang="ts">
-  import { Form, Field } from "vee-validate"
+  import { Form } from "vee-validate"
   import Input from '~/components/forms/input/input.vue';
   import { useCounterStore } from "~/stores/counter";
-  import { createHmac,  } from "crypto";
-  import { onMounted } from "vue";
+  import IconChevronLeft from '@privyid/persona-icon/vue/chevron-left/20.vue'
+import { useQuery, useMutation } from "composables/api";
 
-  onMounted(() => {
 
-    const hash = createHmac("sha256", "123")
-      .update("test")
-      .digest("base64")
-  
-    console.log(hash)
+  const {data } = useQuery<{id: number}>("insurance_option-{id}", {
+    params: {
+      id: 123,
+    },
   })
-
-
-  const count = ref(0)
-  const count2 = reactive({count: 0})
-
-  const { data, onChange } = useCustom()
+  const {mutate } = useMutation("loan-segmentation")
   const counter = useCounterStore();
 
   const handleSubmit = (e: any) => {
+    mutate({
+      sdf: "asdf"
+    })
     console.log("---", e) 
   }
 
@@ -30,9 +26,13 @@
 <template>
   <div class="min-h-screen grid place-items-center bg-gray-900">
     <div class="text-center">
-      <h1 class="font-bold text-4xl text-white">Sun.js</h1>
-      {{ data.loading ? "True" : "False" }}
-      <button @click="() => onChange(!data.loading)">click</button>
+      <h1 class="font-bold text-4xl text-white">Personuxt Boilerplate</h1>
+      <p-button>Click me</p-button>
+      <button>click</button>
+      <p-button-group>
+        <p-button icon color="info"><IconChevronLeft /></p-button>
+        <p-button color="info">Button Text</p-button>
+      </p-button-group>
       <Form @submit="handleSubmit">
         <Input name="email"/>
         <button>submit</button>
