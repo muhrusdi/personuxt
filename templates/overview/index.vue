@@ -3,7 +3,7 @@
   import Input from '~/components/forms/input/input.vue';
   import { useCounterStore } from "~/stores/counter";
   import IconChevronLeft from '@privyid/persona-icon/vue/chevron-left/20.vue'
-import { useQuery, useMutation } from "composables/api";
+import { useQuery, useMutation } from "~/composables/api";
 
 
   const {data } = useQuery<{id: number}>("insurance_option-{id}", {

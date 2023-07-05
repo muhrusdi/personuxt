@@ -1,41 +1,28 @@
 import { UseFetchOptions, AsyncData } from "nuxt/dist/app/composables"
 import { KeysOf, PickFrom, _AsyncData } from "nuxt/dist/app/composables/asyncData"
 import type { FetchError } from 'ofetch';
+import { API } from "~/utils/endpoint"
 
-type Params = {
-  key: string
-  value: string
-}
-
-type Options<TOptions> = {
-  params?: Record<string, Params> 
-  query?: Record<string, Params> 
+type Options<TParams, TQuery, TOptions> = {
+  params?: TParams 
+  query?: TQuery
   options?: UseFetchOptions<TOptions>
 }
 
-
-const Paths = {
-  "user": "/user",
-  "list": "/list",
-  "employe/present": "/employe/present",
-  "employe/absent": "/employe/absent",
-  "employe/sick": "/employe/sick",
-}
-
-type PathsType = typeof Paths
+// The API was being defined in the utils/enpoints.ts
+type PathsType = typeof API
 
 type PathsKeyType = {
   [K in keyof PathsType]: string
 }
 
-
-export const useAsync = <TData>(path: keyof PathsKeyType, options?: Options<TData>) => {
+export const useQuery = <TParams = null, TQuery = null, TOptions = null>(path: keyof PathsKeyType, options?: Options<TParams, TQuery, TOptions>) => {
   let paramsString = ""
   let queryString = ""
 
   if (options?.params) {
     for (const key in options.params) {
-      paramsString += `/${key}/${options.params[key]}`
+      paramsString += `/${options.params[key]}`
     }
   }
 
@@ -46,7 +33,7 @@ export const useAsync = <TData>(path: keyof PathsKeyType, options?: Options<TDat
     }
   }
 
-  return useFetch(Paths[path] + paramsString + queryString, {
+  return useFetch(API[path] + paramsString + queryString, {
     ...options?.options,
     async onRequest({ options }) {
       const accessToken = useCookie('access_token' ,{ default: undefined })
@@ -59,7 +46,7 @@ export const useAsync = <TData>(path: keyof PathsKeyType, options?: Options<TDat
   })
 }
 
-export const useMutation = <TData>(path: keyof PathsKeyType, options?: Options<TData>) => {
+export const useMutation = <TParams = null, TQuery = null, TOptions = null>(path: keyof PathsKeyType, options?: Options<TParams, TQuery, TOptions>) => {
   let paramsString = ""
   let queryString = ""
 
@@ -72,16 +59,16 @@ export const useMutation = <TData>(path: keyof PathsKeyType, options?: Options<T
   if (options?.query) {
     queryString = "?"
     for (const key in options.query) {
-      queryString += `${key}&${options.query[key]}&`
+      queryString += `${key}=${options.query[key]}&`
     }
   }
 
-  let response: _AsyncData<PickFrom<TData, KeysOf<TData>> | null, FetchError<any> | null> = {} as never
+  let response: AsyncData<PickFrom<TOptions, KeysOf<TOptions>> | null, FetchError<any> | null> = {} as never
 
   const mutate = (formData: any) => {
-    const res = useFetch(Paths[path] + paramsString + queryString, {
+    const res = useFetch(API[path] + paramsString + queryString, {
       ...options?.options,
-      method: "POST",
+      method: "post",
       body: formData,
       async onRequest({ options }) {
         const accessToken = useCookie('access_token' ,{ default: undefined })

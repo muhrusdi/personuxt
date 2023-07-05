@@ -26,8 +26,11 @@ export default defineNuxtConfig({
   },
   postcss: {
     plugins: {
+      'tailwindcss/nesting': {},
       tailwindcss: {},
       autoprefixer: {},
+      'postcss-hexrgba': {},
+      'postcss-lighten-darken': {},
     },
   },
   css: [
@@ -43,7 +46,8 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
-    '@nuxt/devtools'
+    '@nuxt/devtools',
+    '@privyid/persona'
   ],
   devtools: {
     enabled: true,

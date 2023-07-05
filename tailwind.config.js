@@ -12,7 +12,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  buildModules: [
-    '@nuxt/postcss8',
-  ],
+  presets: [require('@privyid/tailwind-preset')], 
 }
