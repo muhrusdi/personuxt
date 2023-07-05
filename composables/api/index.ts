@@ -1,10 +1,14 @@
 import { UseFetchOptions, AsyncData } from "nuxt/dist/app/composables"
-import { KeysOf, PickFrom, _AsyncData } from "nuxt/dist/app/composables/asyncData"
-import type { FetchError } from 'ofetch';
+import {
+  KeysOf,
+  PickFrom,
+  _AsyncData,
+} from "nuxt/dist/app/composables/asyncData"
+import type { FetchError } from "ofetch"
 import { API } from "~/utils/endpoint"
 
 type Options<TParams, TQuery, TOptions> = {
-  params?: TParams 
+  params?: TParams
   query?: TQuery
   options?: UseFetchOptions<TOptions>
 }
@@ -16,7 +20,10 @@ type PathsKeyType = {
   [K in keyof PathsType]: string
 }
 
-export const useQuery = <TParams = null, TQuery = null, TOptions = null>(path: keyof PathsKeyType, options?: Options<TParams, TQuery, TOptions>) => {
+export const useQuery = <TParams = null, TQuery = null, TOptions = null>(
+  path: keyof PathsKeyType,
+  options?: Options<TParams, TQuery, TOptions>
+) => {
   let paramsString = ""
   let queryString = ""
 
@@ -36,17 +43,20 @@ export const useQuery = <TParams = null, TQuery = null, TOptions = null>(path: k
   return useFetch(API[path] + paramsString + queryString, {
     ...options?.options,
     async onRequest({ options }) {
-      const accessToken = useCookie('access_token' ,{ default: undefined })
+      const accessToken = useCookie("access_token", { default: undefined })
 
       if (accessToken.value) {
         options.headers = new Headers(options.headers)
-        options.headers.append('Authorization', accessToken.value)
+        options.headers.append("Authorization", accessToken.value)
       }
     },
   })
 }
 
-export const useMutation = <TParams = null, TQuery = null, TOptions = null>(path: keyof PathsKeyType, options?: Options<TParams, TQuery, TOptions>) => {
+export const useMutation = <TParams = null, TQuery = null, TOptions = null>(
+  path: keyof PathsKeyType,
+  options?: Options<TParams, TQuery, TOptions>
+) => {
   let paramsString = ""
   let queryString = ""
 
@@ -63,7 +73,10 @@ export const useMutation = <TParams = null, TQuery = null, TOptions = null>(path
     }
   }
 
-  let response: AsyncData<PickFrom<TOptions, KeysOf<TOptions>> | null, FetchError<any> | null> = {} as never
+  let response: AsyncData<
+    PickFrom<TOptions, KeysOf<TOptions>> | null,
+    FetchError<any> | null
+  > = {} as never
 
   const mutate = (formData: any) => {
     const res = useFetch(API[path] + paramsString + queryString, {
@@ -71,11 +84,11 @@ export const useMutation = <TParams = null, TQuery = null, TOptions = null>(path
       method: "post",
       body: formData,
       async onRequest({ options }) {
-        const accessToken = useCookie('access_token' ,{ default: undefined })
-  
+        const accessToken = useCookie("access_token", { default: undefined })
+
         if (accessToken.value) {
           options.headers = new Headers(options.headers)
-          options.headers.append('Authorization', accessToken.value)
+          options.headers.append("Authorization", accessToken.value)
         }
       },
     })
@@ -86,6 +99,6 @@ export const useMutation = <TParams = null, TQuery = null, TOptions = null>(path
 
   return {
     mutate,
-    ...response
+    ...response,
   }
 }

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-  import overview from "../templates/overview/index.vue"
-
+import overview from "../templates/overview/index.vue"
 </script>
 
 <template>
   <div>
-    <overview/>
+    <overview />
   </div>
 </template>

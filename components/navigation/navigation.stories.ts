@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryObj } from "@storybook/vue3"
 
-import Nav from './index.vue';
+import Nav from "./index.vue"
 
 const meta: Meta<typeof Nav> = {
   component: Nav,
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Nav>;
+export default meta
+type Story = StoryObj<typeof Nav>
 
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
@@ -15,11 +15,11 @@ type Story = StoryObj<typeof Nav>;
  * to learn how to use render functions.
  */
 export const Primary: Story = {
-  render: (args) => ({
+  render: args => ({
     components: { Nav },
     setup() {
-      return { args };
+      return { args }
     },
-    template: '<Nav />',
+    template: "<Nav />",
   }),
-};
+}
