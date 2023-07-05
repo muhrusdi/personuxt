@@ -6,12 +6,17 @@
     name: {
       type: String,
       required: true
+    },
+    placeholder: {
+      type: String,
     }
   })
   const nameRef = toRef(props, "name")
+
   const { errorMessage, value } = useField(nameRef)
+
 </script>
 <template>
-  <input v-model="value" type="text">
-  <span>{{ errorMessage }}</span>
+  <p-input v-model="value" :placeholder="props.placeholder"/>
+  <span v-if="errorMessage">{{ errorMessage }}</span>
 </template>
